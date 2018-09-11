@@ -38,7 +38,7 @@ module.exports = function(router, databases){
                 console.log("Refreshing cache");
                 proccedCall(url).then((data) => {
                     let parseData = JSON.parse(data);
-                    matches.save({id: parseData.id, accountId: parseData.accountId, name: parseData.name, updatedAt: Date.now()}).then((user) => {
+                    matches.save({id: parseData.id, accountId: parseData.accountId, name: parseData.name}).then((user) => {
                         res.json(user.dataValues);
                     }, (err) => {
                         console.error("Error occurred while saving new instance");
@@ -49,7 +49,9 @@ module.exports = function(router, databases){
             } else {
                 proccedCall(url).then((data) => {
                     let parseData = JSON.parse(data);
-                    databases.Summoner.create({id: parseData.id, accountId: parseData.accountId, name: parseData.name}).then((user) => {
+                    databases.Summoner.updatedAt = Date.now();
+                    databases.Summoner.updatedAt.changed('updatedAt', true);
+                    databases.Summoner.update({id: parseData.id, accountId: parseData.accountId, name: parseData.name}).then((user) => {
                         res.json(user.dataValues);
                     }, (err) => {
                         console.error("Error occurred while saving new instance");

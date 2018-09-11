@@ -29,11 +29,11 @@ module.exports = function(router, databases){
                     res.json(matches[0]);
                 } else {
                     let data = JSON.parse(proccedCall(url));
-                    database.Summoner.save({accountId: data.id, account: data.accountId, name: name}).then((user => {
+                    database.Summoner.save({accountId: data.id, account: data.accountId, name: name}).then((user) => {
                         req.json(user);
                     }, (err) => {
                         console.error("Error occurred while saving new instance")
-                    }))
+                    });
                 }
         }, (err)=> {
                 console.error(err);

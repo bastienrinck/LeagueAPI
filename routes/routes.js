@@ -26,10 +26,11 @@ module.exports = function(router, databases){
                 name: req.params.userName
             }
         }).then((matches) => {
-            if (matches && (Date.now() - matches.dataValues.createdAt)) {
-                console.log(`${Date.now()} - ${matches.dataValues.createdAt} = ${Date.now() - matches.dataValues.createdAt}`);
+            if (matches && (Date.now() - matches.dataValues.createdAt.valueOf() < 30)) {
+                console.log(`${Date.now()} - ${matches.dataValues.createdAt.valueOf()} = ${Date.now() - matches.dataValues.createdAt.valueOf()}`);
                 res.json(matches.dataValues);
             } else {
+                console.log("Refreshing cache");
                 proccedCall(url).then((data) => {
                     let parseData = JSON.parse(data);
                     databases.Summoner.create({id: parseData.id, accountId: parseData.accountId, name: parseData.name}).then((user) => {

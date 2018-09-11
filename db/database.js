@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const fs = require('fs');
-const dirPath = './tables/';
+const path = require('path');
+const dirPath = './db/tables/';
 const sequelize = new Sequelize('leagueAPI', 'leagueapi', 'ux4q889X7Sun2THF', {
     host: '127.0.0.1',
     dialect: 'mysql',
@@ -15,6 +16,6 @@ const sequelize = new Sequelize('leagueAPI', 'leagueapi', 'ux4q889X7Sun2THF', {
 });
 
 fs.readdirSync(dirPath).forEach((table)=> {
-        eval(fs.readFileSync(dirPath + table)(sequelize));
+        eval(fs.readFileSync(path.join(dirPath + table)).toString()(sequelize));
     });
 module.exports = sequelize;

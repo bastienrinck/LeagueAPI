@@ -36,6 +36,7 @@ module.exports = function(router, databases){
             }
             else if (matches) {
                 console.log("Refreshing cache");
+                matches.updatedAt = Date.now();
                 proccedCall(url).then((data) => {
                     let parseData = JSON.parse(data);
                     matches.update({id: parseData.id, accountId: parseData.accountId, name: parseData.name, updatedAt: Date.now()}).then((user) => {

@@ -26,7 +26,7 @@ module.exports = function(router, databases){
                 name: req.params.userName
             }
         }).then((matches) => {
-            if (matches && (Date.now() - matches.dataValues.createdAt.valueOf() < 30)) {
+            if (matches && (Date.now() - matches.dataValues.createdAt.valueOf() < 30000)) {
                 console.log(`${Date.now()} - ${matches.dataValues.createdAt.valueOf()} = ${Date.now() - matches.dataValues.createdAt.valueOf()}`);
                 res.json(matches.dataValues);
             }

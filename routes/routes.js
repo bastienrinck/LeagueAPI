@@ -26,6 +26,8 @@ module.exports = function(router, databases){
                 name: req.params.userName
             }
         }).then((matches) => {
+            console.log(Date.now());
+            console.log(matches.dataValues.updatedAt.valueOf());
             console.log(Date.now() - matches.dataValues.updatedAt.valueOf());
             console.log((Date.now() - matches.dataValues.updatedAt.valueOf()) < 30000);
             if (matches && (Date.now() - matches.dataValues.updatedAt.valueOf()) < 30000) {

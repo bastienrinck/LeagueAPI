@@ -25,7 +25,7 @@ module.exports = function(router, databases){
             name: req.params.userName
             }}).then((matches)=> {
                 console.log(matches);
-                if (matches.length) {
+                if (matches) {
                     res.json(matches[0]);
                 } else {
                     proccedCall(url);

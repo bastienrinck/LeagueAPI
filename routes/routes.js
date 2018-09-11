@@ -23,4 +23,8 @@ module.exports = function(router, database){
         let url = `https://euw1.api.riotgames.com/lol/summoner/v3/summoners/by-name/${req.params.userName}`;
         proccedCall(url, res);
     });
+    router.use('/api/rank/:userid', (req, res)=> {
+	let url = `https://euw1.api.riotgames.com/lol/league/v3/positions/by-summoner/${req.params.userid}`;
+        proccedCall(url, res);
+    });
 };

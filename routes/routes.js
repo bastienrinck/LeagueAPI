@@ -1,5 +1,5 @@
 const https = require('https');
-const key = 'RGAPI-60c5089c-f1f0-4bcf-8c36-42dd43b89864';
+const key = 'RGAPI-1c469f1b-6b43-4575-a409-e82d068507e9';
 const options = {headers: {'X-Riot-Token': key}};
 
 function proccedCall(url, res) {
@@ -19,7 +19,7 @@ function proccedCall(url, res) {
 // routes
 module.exports = function(router, database){
 
-    router.use('/:userName', (req, res)=> {
+    router.use('/api/username/:userName', (req, res)=> {
         let url = `https://euw1.api.riotgames.com/lol/summoner/v3/summoners/by-name/${req.params.userName}`;
         proccedCall(url, res);
     });

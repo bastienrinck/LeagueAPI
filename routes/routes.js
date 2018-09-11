@@ -28,12 +28,12 @@ module.exports = function(router, databases){
         }).then((matches) => {
             console.log(matches);
             if (matches) {
-                res.json(matches[0]);
+                res.json(matches[0].dataValues);
             } else {
                 proccedCall(url).then((data) => {
                     let parseData = JSON.parse(data);
                     databases.Summoner.create({id: parseData.id, accountId: parseData.accountId, name: parseData.name}).then((user) => {
-                        res.json(user);
+                        res.json(user.dataValues);
                     }, (err) => {
                         console.error("Error occurred while saving new instance");
                         console.error(`"Error: " ${err}`);

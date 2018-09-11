@@ -32,7 +32,7 @@ module.exports = function(router, databases){
             } else {
                 proccedCall(url).then((data) => {
                     JSON.parse(data);
-                    databases.Summoner.save({accountId: data.id, account: data.accountId, name: name}).then((user) => {
+                    databases.Summoner.save({accountId: data.id, account: data.accountId, name: data.name}).then((user) => {
                         req.json(user);
                     }, (err) => {
                         console.error("Error occurred while saving new instance")

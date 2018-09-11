@@ -28,8 +28,9 @@ module.exports = function(router, databases){
                 if (matches.length) {
                     res.json(matches[0]);
                 } else {
+                    proccedCall(url);
                     throw "error";
-                    let data = JSON.parse("");
+                    let data = JSON.parse();
                     database.Summoner.save({accountId: data.id, account: data.accountId, name: name}).then((user) => {
                         req.json(user);
                     }, (err) => {

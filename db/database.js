@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('leagueAPI', 'leagueapi', 'ux4q889X7Sun2THF', {
-    host: 'rectoria.eu',
+    host: '127.0.0.1',
     dialect: 'mysql',
     operatorsAliases: false,
 

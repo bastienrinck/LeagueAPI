@@ -1,4 +1,4 @@
-module.exports = function (sequelize){
+function (sequelize){
          sequelize.define('summoner', {
              id: Sequelize.INTEGER;
              accountId: Sequelize.INTEGER;

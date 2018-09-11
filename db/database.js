@@ -15,6 +15,6 @@ const sequelize = new Sequelize('leagueAPI', 'leagueapi', 'ux4q889X7Sun2THF', {
 });
 
 fs.readdirSync(dirPath).forEach((table)=> {
-        require(dirPath + table)(sequelize);
+        eval(fs.readFileSync(dirPath + table)(sequelize));
     });
 module.exports = sequelize;

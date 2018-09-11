@@ -29,8 +29,21 @@ module.exports = function(router, databases){
             if (matches && (Date.now() - matches.dataValues.createdAt.valueOf() < 30)) {
                 console.log(`${Date.now()} - ${matches.dataValues.createdAt.valueOf()} = ${Date.now() - matches.dataValues.createdAt.valueOf()}`);
                 res.json(matches.dataValues);
-            } else {
+            }
+            else if (matches) {
                 console.log("Refreshing cache");
+                proccedCall(url).then((data) => {
+                    let parseData = JSON.parse(data);
+                    matches.update({id: parseData.id, accountId: parseData.accountId, name: parseData.name}).then((user) => {
+                        res.json(user.dataValues);
+                    }, (err) => {
+                        console.error("Error occurred while saving new instance");
+                        console.error(`"Error: " ${err}`);
+                    });
+                }, () => {
+                });
+            } else {
+
                 proccedCall(url).then((data) => {
                     let parseData = JSON.parse(data);
                     databases.Summoner.create({id: parseData.id, accountId: parseData.accountId, name: parseData.name}).then((user) => {

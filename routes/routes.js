@@ -2,7 +2,7 @@ const https = require('https');
 const key = 'RGAPI-1c469f1b-6b43-4575-a409-e82d068507e9';
 const options = {headers: {'X-Riot-Token': key}};
 
-function proccedCall(url) {
+async function proccedCall(url) {
     https.get(url, options, (resp)=> {
         let data = '';
 
@@ -28,11 +28,10 @@ module.exports = function(router, databases){
                 if (matches) {
                     res.json(matches[0]);
                 } else {
-                    proccedCall(url).then((data)=>{
+                    let data = await proccedCall(url);
                         JSON.parse(data);
                         database.Summoner.save({accountId: data.id, account: data.accountId, name: name}).then((user) => {
                             req.json(user);
-                        });
                     }, (err) => {
                         console.error("Error occurred while saving new instance")
                     });

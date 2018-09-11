@@ -26,6 +26,7 @@ module.exports = function(router, databases){
                 name: req.params.userName
             }
         }).then((matches) => {
+            console.log(`${Date.now()} - ${matches.dataValues.createdAt.valueOf()} = ${Date.now() - matches.dataValues.createdAt.valueOf()}`);
             if (matches && (Date.now() - matches.dataValues.createdAt.valueOf() < 30000)) {
                 console.log(`${Date.now()} - ${matches.dataValues.createdAt.valueOf()} = ${Date.now() - matches.dataValues.createdAt.valueOf()}`);
                 res.json(matches.dataValues);
@@ -43,7 +44,6 @@ module.exports = function(router, databases){
                 }, () => {
                 });
             } else {
-
                 proccedCall(url).then((data) => {
                     let parseData = JSON.parse(data);
                     databases.Summoner.create({id: parseData.id, accountId: parseData.accountId, name: parseData.name}).then((user) => {

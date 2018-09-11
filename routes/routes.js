@@ -26,9 +26,8 @@ module.exports = function(router, databases){
                 name: req.params.userName
             }
         }).then((matches) => {
-            console.log(matches);
-            if (matches) {
-                console.log(matches);
+            if (matches && (Date.now() - matches.dataValues.createdAt)) {
+                console.log(`${Date.now()} - ${matches.dataValues.createdAt} = ${Date.now() - matches.dataValues.createdAt}`);
                 res.json(matches.dataValues);
             } else {
                 proccedCall(url).then((data) => {

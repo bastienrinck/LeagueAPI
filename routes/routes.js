@@ -32,7 +32,7 @@ module.exports = function(router, databases){
             } else {
                 proccedCall(url).then((data) => {
                     let parseData = JSON.parse(data);
-                    databases.Summoner.create({accountId: parseData.id, account: parseData.accountId, name: parseData.name}).then((user) => {
+                    databases.Summoner.create({id: parseData.id, accountId: parseData.accountId, name: parseData.name}).then((user) => {
                         req.json(user);
                     }, (err) => {
                         console.error("Error occurred while saving new instance");

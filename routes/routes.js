@@ -35,7 +35,8 @@ module.exports = function(router, databases){
                     databases.Summoner.create({accountId: parseData.id, account: parseData.accountId, name: parseData.name}).then((user) => {
                         req.json(user);
                     }, (err) => {
-                        console.error("Error occurred while saving new instance")
+                        console.error("Error occurred while saving new instance");
+                        console.error(`"Error: " ${err}`);
                     });
                 }, () => {
                 });

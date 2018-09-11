@@ -2,44 +2,47 @@ const https = require('https');
 const key = 'RGAPI-1c469f1b-6b43-4575-a409-e82d068507e9';
 const options = {headers: {'X-Riot-Token': key}};
 
-async function proccedCall(url) {
-    https.get(url, options, (resp)=> {
-        let data = '';
-
-        resp.on('data', (chunk)=> {
-            data += chunk;
-        });
-
-        resp.on('end', () => {
-            return data;
+function proccedCall(url) {
+    return new Promise((resolve)=> {
+        https.get(url, options, (resp)=> {
+            let data = '';
+            resp.on('data', (chunk)=> {
+                data += chunk;
+            });
+            resp.on('end', () => {
+                resolve(data);
+            });
         });
     });
 }
 
 // routes
-module.exports = async function(router, databases){
+module.exports = function(router, databases){
 
     router.use('/api/username/:userName', (req, res)=> {
         let url = `https://euw1.api.riotgames.com/lol/summoner/v3/summoners/by-name/${req.params.userName}`;
-        databases.Summoner.findOne({where: {
-            name: req.params.userName
-            }}).then((matches)=> {
-                console.log(matches);
-                if (matches) {
-                    res.json(matches[0]);
-                } else {
-                    let data = await proccedCall(url);
-                        JSON.parse(data);
-                        database.Summoner.save({accountId: data.id, account: data.accountId, name: name}).then((user) => {
-                            req.json(user);
+        databases.Summoner.findOne({
+            where: {
+                name: req.params.userName
+            }
+        }).then((matches) => {
+            console.log(matches);
+            if (matches) {
+                res.json(matches[0]);
+            } else {
+                proccedCall(url).then((data) => {
+                    JSON.parse(data);
+                    database.Summoner.save({accountId: data.id, account: data.accountId, name: name}).then((user) => {
+                        req.json(user);
                     }, (err) => {
                         console.error("Error occurred while saving new instance")
                     });
-                }
-        }, (err)=> {
-                console.error(err);
+                }, () => {
+                });
+            }
         });
     });
+
     router.use('/api/rank/:userid', (req, res)=> {
 	let url = `https://euw1.api.riotgames.com/lol/league/v3/positions/by-summoner/${req.params.userid}`;
         databases.Summoner.findOne({where: {

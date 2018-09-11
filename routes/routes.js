@@ -22,7 +22,7 @@ module.exports = function(router, databases){
     router.use('/api/username/:userName', (req, res)=> {
         let url = `https://euw1.api.riotgames.com/lol/summoner/v3/summoners/by-name/${req.params.userName}`;
         databases.Summoner.findAll({where: {
-            name: req.params.username
+            name: req.params.userName
             }}).then((res)=> {
                 console.log(res);
                 proccedCall(url, res);
@@ -33,7 +33,7 @@ module.exports = function(router, databases){
     router.use('/api/rank/:userid', (req, res)=> {
 	let url = `https://euw1.api.riotgames.com/lol/league/v3/positions/by-summoner/${req.params.userid}`;
         databases.Summoner.findAll({where: {
-                name: req.params.username
+                name: req.params.userid
             }}).then((res)=> {
             console.log(res);
             proccedCall(url, res);

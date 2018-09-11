@@ -28,7 +28,8 @@ module.exports = function(router, databases){
         }).then((matches) => {
             console.log(matches);
             if (matches) {
-                res.json(matches[0].dataValues);
+                console.log(matches);
+                res.json(matches.dataValues);
             } else {
                 proccedCall(url).then((data) => {
                     let parseData = JSON.parse(data);

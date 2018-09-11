@@ -17,14 +17,28 @@ function proccedCall(url, res) {
 }
 
 // routes
-module.exports = function(router, database){
+module.exports = function(router, databases){
 
     router.use('/api/username/:userName', (req, res)=> {
         let url = `https://euw1.api.riotgames.com/lol/summoner/v3/summoners/by-name/${req.params.userName}`;
-        proccedCall(url, res);
+        databases.Summoner.findAll({where: {
+            name: req.params.username
+            }}).then((res)=> {
+                console.log(res);
+                proccedCall(url, res);
+        }, (err)=> {
+                console.error(err);
+        });
     });
     router.use('/api/rank/:userid', (req, res)=> {
 	let url = `https://euw1.api.riotgames.com/lol/league/v3/positions/by-summoner/${req.params.userid}`;
-        proccedCall(url, res);
+        databases.Summoner.findAll({where: {
+                name: req.params.username
+            }}).then((res)=> {
+            console.log(res);
+            proccedCall(url, res);
+        }, (err)=> {
+            console.error(err);
+        });
     });
 };

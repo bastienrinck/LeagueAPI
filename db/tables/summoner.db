@@ -1,7 +1,12 @@
-function (sequelize){
-         sequelize.define('summoner', {
-             id: Sequelize.INTEGER;
-             accountId: Sequelize.INTEGER;
-             name: Sequelize.STRING;
-         })
+(sequelize) => {
+    sequelize.Summoner = sequelize.define('summoner', {
+        id: {type: Sequelize.INTEGER, primaryKey: true},
+        accountId: {type: Sequelize.INTEGER},
+        name: {type: Sequelize.STRING}
+    });
+
+    sequelize.Summoner.sync().then(
+        () => console.log("Table summoner created"),
+        (err) => console.error(`Error ${err} while creating table 'summoner'`)
+    );
 };

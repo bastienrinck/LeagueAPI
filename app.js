@@ -12,8 +12,8 @@ app.use(bodyParser.json());
 let port = process.env.PORT || 8080;
 
 // database
-let database = require('./db/database');
-database
+let databases = require('./db/database');
+databases
     .authenticate()
     .then(() => {
         console.log('Connection has been established successfully.');
@@ -23,7 +23,7 @@ database
     });
 
 // register API routes
-require('./routes/routes')(router, database);
+require('./routes/routes')(router, databases);
 app.use('/api', router);
 
 // start the server

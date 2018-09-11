@@ -17,7 +17,7 @@ function proccedCall(url, res) {
 }
 
 // routes
-module.exports = function(router){
+module.exports = function(router, database){
 
     router.use('/:userName', (req, res)=> {
         let url = `https://euw1.api.riotgames.com/lol/summoner/v3/summoners/by-name/${req.params.userName}`;

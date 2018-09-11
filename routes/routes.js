@@ -38,7 +38,8 @@ module.exports = function(router, databases){
                 console.log("Refreshing cache");
                 proccedCall(url).then((data) => {
                     let parseData = JSON.parse(data);
-                    matches.update({id: parseData.id, accountId: parseData.accountId, name: parseData.name}, {fields: ['id', 'accountId', 'name']}).then((user) => {
+                    matches.id = parseData.id;
+                    matches.update({id: parseData.id, accountId: parseData.accountId, name: parseData.name}).then((user) => {
                         res.json(user.dataValues);
                     }, (err) => {
                         console.error("Error occurred while saving new instance");
